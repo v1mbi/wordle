@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import WordGrid from './WordGrid'
 
 export default function Wordle() {
-  const [wordle,setWordle] = useState("Hello")
+  const [wordle,setWordle] = useState("")
   const [won,setWon] = useState(false)
   const [retry,setRetry] = useState(false)
   const [easy,setEasy] = useState(true)
@@ -14,7 +14,7 @@ export default function Wordle() {
   useEffect(() => {
     async function fetchData(){
       const attachment = !easy?("?length=" + randomint(5,3)):("?length=" + randomint(9,6)) 
-      const data = await fetch("https://random-word-api.herokuapp.com/word" + attachment)
+      const data = await fetch("https://random-word-api.herokuapp.com/word" + attachment).catch((err)=>console.log("error"))
       const response = await data.json()
       setWordle(response[0])
     }
@@ -32,7 +32,7 @@ export default function Wordle() {
   
   return (<div className='flex flex-col items-center '>
 
-<h6 className='m-0 text-xs text-gray-800'>the wordle in the console</h6>
+{(wordle=="")?<h5 className='m-4'>Api fetch failed</h5>:<><h6 className='m-0 text-xs text-gray-800'>the wordle in the console</h6></>}
     <div className='flex flex-row'>
       
       
@@ -65,6 +65,7 @@ export default function Wordle() {
     <WordGrid wordle= {wordle} won={setWon}/>
     <WordGrid wordle= {wordle} won={setWon}/>
     <WordGrid wordle= {wordle} won={setWon}/>
+    
     <button className='bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded' onClick={()=>setRetry(!retry)}>Refresh</button>
     {won ? <h1 className='m-4'> You won</h1> : <h1></h1>}
     </div>
