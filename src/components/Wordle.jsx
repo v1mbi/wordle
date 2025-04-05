@@ -3,7 +3,7 @@ import WordGrid from "./WordGrid";
 import { meta } from "@eslint/js";
 
 export default function Wordle() {
-  const [wordle, setWordle] = useState("");
+  const [wordle, setWordle] = useState("Loading...");
 
   const [retry, setRetry] = useState(false);
   const [definition, setDefinition] = useState("");
@@ -21,12 +21,13 @@ export default function Wordle() {
         const metaData = await meta.json();
         setDefinition(metaData[0].meanings[0].definitions[0].definition);
       } catch (error) {
-        setDefinition("could not find anything on this word");
+        setRetry(!retry);
       }
     }
     fetchData();
   }, [retry]);
 
+  
   console.log(wordle);
 
   return (
