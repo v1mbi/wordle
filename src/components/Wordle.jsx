@@ -1,74 +1,67 @@
-import React, { useEffect, useRef, useState } from 'react'
-import WordGrid from './WordGrid'
+import React, { useEffect, useRef, useState } from "react";
+import WordGrid from "./WordGrid";
+import { meta } from "@eslint/js";
 
 export default function Wordle() {
-  const [wordle,setWordle] = useState("")
-  const [won,setWon] = useState(false)
-  const [retry,setRetry] = useState(false)
-  const [easy,setEasy] = useState(true)
+  const [wordle, setWordle] = useState("");
 
-  function randomint(max,min){
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+  const [retry, setRetry] = useState(false);
+  const [definition, setDefinition] = useState("");
 
   useEffect(() => {
-    async function fetchData(){
-      const attachment = !easy?("?length=" + randomint(5,3)):("?length=" + randomint(9,6)) 
-      const data = await fetch("https://random-word-api.herokuapp.com/word" + attachment).catch((err)=>console.log("error"))
-      const response = await data.json()
-      setWordle(response[0])
+    async function fetchData() {
+      const data = await fetch("https://random-word-api.herokuapp.com/word");
+      const response = await data.json();
+      setWordle(response[0].toLowerCase());
+      try {
+        const meta = await fetch(
+          "https://api.dictionaryapi.dev/api/v2/entries/en/" +
+            response[0].toLowerCase()
+        );
+        const metaData = await meta.json();
+        setDefinition(metaData[0].meanings[0].definitions[0].definition);
+      } catch (error) {
+        setDefinition("could not find anything on this word");
+      }
     }
-    fetchData()
-  },[retry])
+    fetchData();
+  }, [retry]);
 
-  
-  useEffect(()=>{
-    setRetry(!retry)
-  },[easy])
+  console.log(wordle);
 
-  
+  return (
+    <div className="flex flex-col items-center ">
+      {wordle == "" ? (
+        <h5 className="m-4">Loading...</h5>
+      ) : (
+        <>
+          <h6 className="m-0 text-xs text-gray-800">
+            the wordle in the console
+          </h6>
+          <div className="flex flex-row">
+            <h1 className="text-4xl m-1 text-gray-300">Wordle</h1>
+            <h1 className="text-4xl m-1 text-blue-400">Clone</h1>
+          </div>
 
-  console.log(wordle)
-  
-  return (<div className='flex flex-col items-center '>
+          <WordGrid wordle={wordle} />
+          <WordGrid wordle={wordle} />
+          <WordGrid wordle={wordle} />
+          <WordGrid wordle={wordle} />
+          <WordGrid wordle={wordle} />
+          <WordGrid wordle={wordle} />
+          <div className="flex flex-col mt-3">
+            <h4 className="text-blue-400">definition:</h4>
+            <h3 className="mb-5 mt-0 items-start text-center ">{definition}</h3>
+          </div>
 
-{(wordle=="")?<h5 className='m-4'>Api fetch failed</h5>:<><h6 className='m-0 text-xs text-gray-800'>the wordle in the console</h6></>}
-    <div className='flex flex-row'>
-      
-      
-      
-      <h1 className='text-4xl m-1 text-gray-300'>Wordle</h1><h1 className='text-4xl m-1 text-blue-400'>Clone</h1></div>
-
-
-
-    <div className="flex items-center m-2">
-      <label className="relative inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          className="sr-only peer"
-          checked={easy}
-          readOnly
-        />
-        <div
-          onClick={() => setEasy(!easy)}
-          className="w-11 h-6 bg-teal-300 rounded-full peer peer-checked:bg-red-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all"
-        ></div>
-        <span className="ml-2 text-sm font-medium text-white-900">
-          {easy ? "Hard" : "Easy"}
-        </span>
-      </label>
+          <button
+            className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setRetry(!retry)}
+          >
+            Refresh
+          </button>
+        </>
+      )}
     </div>
-    
-    
-    <WordGrid wordle= {wordle} won={setWon}/>
-    <WordGrid wordle= {wordle} won={setWon}/>
-    <WordGrid wordle= {wordle} won={setWon}/>
-    <WordGrid wordle= {wordle} won={setWon}/>
-    <WordGrid wordle= {wordle} won={setWon}/>
-    
-    <button className='bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded' onClick={()=>setRetry(!retry)}>Refresh</button>
-    {won ? <h1 className='m-4'> You won</h1> : <h1></h1>}
-    </div>
-    
-  )
+  );
 }

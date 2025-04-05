@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import WordTile from "./WordTile";
 
-export default function WordRow({ wordle, won }) {
+export default function WordRow({ wordle }) {
   const [answer, setAnswer] = useState("");
   let answerArray = answer.split("");
   while (answerArray.length < wordle.length) answerArray.push(" ");
@@ -36,9 +36,7 @@ export default function WordRow({ wordle, won }) {
       setAnswer(answer + letter);
     }
   };
-  if (answer == wordle && entered) {
-    won(true);
-  }
+  
 
   return (
     <div className="flex m-1" onKeyDown={handleKeyDown} tabIndex={0}>
