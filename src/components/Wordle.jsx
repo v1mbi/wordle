@@ -3,7 +3,7 @@ import WordGrid from "./WordGrid";
 import { meta } from "@eslint/js";
 
 export default function Wordle() {
-  const [wordle, setWordle] = useState("Loading...");
+  const [wordle, setWordle] = useState("");
 
   const [retry, setRetry] = useState(false);
   const [definition, setDefinition] = useState("");
@@ -33,7 +33,7 @@ export default function Wordle() {
   return (
     <div className="flex flex-col items-center ">
       {wordle == "" ? (
-        <h5 className="m-4">Loading...</h5>
+        <h5 className="m-4">Loading API...</h5>
       ) : (
         <>
           <h6 className="m-0 text-xs text-gray-800">
