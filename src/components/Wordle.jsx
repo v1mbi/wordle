@@ -10,7 +10,9 @@ export default function Wordle() {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch("https://random-word-api.herokuapp.com/word");
+      const data = await fetch(
+        "https://random-word-api.herokuapp.com/word?length=6"
+      );
       const response = await data.json();
       setWordle(response[0].toLowerCase());
       try {
@@ -27,7 +29,6 @@ export default function Wordle() {
     fetchData();
   }, [retry]);
 
-  
   console.log(wordle);
 
   return (
