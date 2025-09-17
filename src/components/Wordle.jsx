@@ -6,24 +6,35 @@ export default function Wordle() {
   const [wordle, setWordle] = useState("");
 
   const [retry, setRetry] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [definition, setDefinition] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch(
-        "https://random-word-api.herokuapp.com/word?length=6"
-      );
-      const response = await data.json();
-      setWordle(response[0].toLowerCase());
       try {
-        const meta = await fetch(
-          "https://api.dictionaryapi.dev/api/v2/entries/en/" +
-            response[0].toLowerCase()
+        const data = await fetch(
+          "https://random-word-api.herokuapp.com/word?length=6"
         );
-        const metaData = await meta.json();
-        setDefinition(metaData[0].meanings[0].definitions[0].definition);
+        const response = await data.json();
+        setWordle(response[0].toLowerCase());
+        try {
+          const meta = await fetch(
+            "https://api.dictionaryapi.dev/api/v2/entries/en/" +
+              response[0].toLowerCase()
+          );
+          const metaData = await meta.json();
+          setDefinition(metaData[0].meanings[0].definitions[0].definition);
+        } catch (error) {
+          setRetry(!retry);
+        }
       } catch (error) {
-        setRetry(!retry);
+        setFailed(true);
+        const data = await fetch(
+          "https://random-word-api-d7bd.onrender.com/random/"
+        );
+        console.log(data);
+        setWordle(data.word);
+        setDefinition(data.definition);
       }
     }
     fetchData();
@@ -33,6 +44,7 @@ export default function Wordle() {
 
   return (
     <div className="flex flex-col items-center ">
+      {failed && wordle == "" ? <h1>failed load try again later🙁</h1> : ""}
       {wordle == "" ? (
         <h5 className="m-4">Loading API...</h5>
       ) : (
