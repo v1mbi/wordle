@@ -7,9 +7,9 @@ export default function WordRow({ wordle }) {
   while (answerArray.length < wordle.length) answerArray.push(" ");
 
   const normal =
-    "bg-blue-400 flex h-12 w-12 rounded justify-center items-center m-1";
+    "bg-blue-200 flex h-12 w-12 rounded justify-center items-center m-1";
   const fail =
-    "bg-blue-600 flex h-12 w-12 rounded justify-center items-center m-1";
+    "bg-blue-300 flex h-12 w-12 rounded justify-center items-center m-1";
   const warning =
     "bg-yellow-400 flex h-12 w-12 rounded justify-center items-center m-1";
   const correct =
