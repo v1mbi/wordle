@@ -39,7 +39,7 @@ export default function WordRow({ wordle }) {
   
 
   return (
-    <div className="flex m-1" onKeyDown={handleKeyDown} tabIndex={0}>
+    <div className="flex m-1 rounded-xl" onKeyDown={handleKeyDown} tabIndex={0}>
       {answerArray.map((value, index) => (
         <WordTile
           key={index}

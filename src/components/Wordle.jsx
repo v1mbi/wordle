@@ -43,14 +43,14 @@ export default function Wordle() {
   console.log(wordle);
 
   return (
-    <div className="flex flex-col items-center ">
+    <div className="blur-sm sm:blur-none flex flex-col h-full items-center ">
       {failed && wordle == "" ? <h1>failed load try again later🙁</h1> : ""}
       {wordle == "" ? (
         <h5 className="m-4">Loading API...</h5>
       ) : (
         <>
           <h6 className="m-0 text-xs text-gray-800">
-            the wordle in the console
+            the wordle is in the console
           </h6>
           <div className="flex flex-row">
             <h1 className="text-4xl m-1 text-gray-300">Wordle</h1>
@@ -76,6 +76,7 @@ export default function Wordle() {
           </button>
         </>
       )}
+      <div className="w-full h-10 text-gray-400 mt-10">Click the rows to start game!</div>
     </div>
   );
 }

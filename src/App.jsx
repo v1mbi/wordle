@@ -8,7 +8,7 @@ function App() {
 
 
   return (
-    <><Wordle/></>
+    <><h1 className=' sm:hidden bg-blue-300 w-fit mx-auto mb-10 p-3 rounded-xl font-semibold border '>please use device with keyboard</h1><Wordle/></>
       
   )
 }
