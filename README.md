@@ -1,12 +1,32 @@
-# React + Vite
+# World Clone Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance, interactive **World Map and Data Clone** built with the MERN stack. This application provides real-time geographic data, country statistics, and interactive mapping features, specifically optimized for **desktop and widescreen displays**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+* **Interactive SVG Map:** High-resolution world map with hover effects and region highlighting.
+* **Real-time Data:** Integration with REST Countries API for up-to-date population, currency, and capital information.
+* **Advanced Search & Filter:** Quickly find countries by continent, sub-region, or specific attributes.
+* **Detailed Analytics:** Individual pages for every country featuring historical data and border relationships.
+* **Desktop Optimized:** A rich, multi-column layout designed exclusively for mouse-and-keyboard navigation.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Technical Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Frontend** | React.js, Tailwind CSS, Framer Motion |
+| **Backend** | Node.js, Express |
+| **State Management** | React Context API / TanStack Query |
+
+---
+
+## Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone [https://github.com/your-username/world-clone.git](https://github.com/your-username/world-clone.git)
+cd world-clone
